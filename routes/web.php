@@ -11,14 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+//ログインユーザの操作
+Route::get('/', 'KirosController@index');
+
+Route::resource('kiros', 'KirosController');
+
 
 // ユーザ登録
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
 Route::post('signup', 'Auth\RegisterController@register')->name('signup.post');
 
+//ログイン
 Route::get('login','Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('login.post');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
+
+//ユーザ一覧
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
+});
