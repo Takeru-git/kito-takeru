@@ -16,8 +16,13 @@
 //ログインユーザの操作
 Route::get('/', 'KirosController@index');
 
-Route::resource('kiros', 'KirosController');
-
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['prefix' => 'users/{id}'], function () {
+        Route::resource('kiros', 'KirosController');
+        Route::resource('kiros', 'KirosController', ['only' => ['store', 'destroy']]);
+    });
+    
+});
 
 // ユーザ登録
 Route::get('signup', 'Auth\RegisterController@showRegistrationForm')->name('signup.get');
