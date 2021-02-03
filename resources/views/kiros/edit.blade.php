@@ -5,7 +5,7 @@
 <!-- ここにページ毎のコンテンツを書く -->
     <div class="row">
         <div class="col-6">
-            {!! Form::model($kiro,['route'=>'kiros.store']) !!}
+            {!! Form::model($kiro,['route'=>['kiros.update',$kiro->id],'method' => 'put']) !!}
                 <div class="form-group">
                     {!! Form::label('kiro','岐路') !!}
                     {!! Form::text('kiro',null,['class' =>'form-control']) !!}

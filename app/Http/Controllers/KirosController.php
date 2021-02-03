@@ -57,7 +57,8 @@ class KirosController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'content' => 'required|max:255',
+            'kiro' => 'required|max:255',
+            'detail' => 'required|max:255'
         ]);
         
         $request->user()->kiros()->create([
@@ -111,7 +112,8 @@ class KirosController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'content' => 'required|max:255',
+            'kiro' => 'required|max:255',
+            'detail'=> 'required|max:255'
         ]);
         
         // idの値でメッセージを検索して取得
@@ -119,8 +121,9 @@ class KirosController extends Controller
         // メッセージを更新
         $kiro->kiro = $request->kiro;
         $kiro->detail = $request->detail;
-        $message->save();
-
+        if (\Auth::id() === $kiro->user_id) {
+            $kiro->save();
+        }
         // トップページへリダイレクトさせる
         return redirect('/');
 
