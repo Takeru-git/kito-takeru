@@ -17,10 +17,8 @@
 Route::get('/', 'KirosController@index');
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['prefix' => 'users/{id}'], function () {
         Route::resource('kiros', 'KirosController');
         Route::resource('kiros', 'KirosController', ['only' => ['store', 'destroy']]);
-    });
     
 });
 
